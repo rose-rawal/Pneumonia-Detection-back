@@ -141,4 +141,29 @@ const getHistory = async (req, res) => {
   }
 };
 patientRouter.post("/getHistory", getHistory);
+
+const getPatient = async (req, res) => {
+  const { name } = req.body;
+  try {
+    const isUser = await userSchema.findOne({ name });
+    if (!isUser) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User not found" });
+    }
+    const isPatient = await patientSchema.find({ user: isUser._id });
+    if (!isPatient) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Patient getting error" });
+    }
+    return res.status(200).json({ success: true, isPatient });
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Error in getting Patient" });
+  }
+};
+patientRouter.post("/myPatient", getPatient);
+
 export default patientRouter;
