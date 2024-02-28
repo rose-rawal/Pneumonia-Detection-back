@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import userSchema from "../model/userSchema.js";
 import patientRouter from "./patientRoute.js";
+import paymentRouter from "./payment.js";
 const router = Router();
 
 const addUser = async (req, res) => {
@@ -89,5 +90,6 @@ const login = async (req, res) => {
 router.post("/login", login);
 
 router.use("/patient", patientRouter);
+router.use("/payment", paymentRouter);
 
 export default router;

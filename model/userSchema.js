@@ -8,5 +8,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  remaining_predict: {
+    type: Number,
+    default: 0,
+  },
 });
 export default mongoose.model("User", userSchema);

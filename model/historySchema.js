@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const historySchema = mongoose.Schema({
   result: {
-    type: [String],
+    type: [Boolean],
     require: true,
   },
 
@@ -12,7 +12,7 @@ const historySchema = mongoose.Schema({
     require: true,
   },
   image: {
-    type: String,
+    type: [String],
   },
   user: {
     type: mongoose.SchemaTypes.ObjectId,
