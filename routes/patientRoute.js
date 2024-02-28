@@ -129,7 +129,9 @@ const getHistory = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    const history = await historySchema.find({ user: isUser._id });
+    const history = await historySchema
+      .find({ user: isUser._id })
+      .populate("patient", "name");
     if (!history) {
       return res.status(400).json({ success: false, message: "no history " });
     } else return res.status(200).json({ success: true, history: history });
