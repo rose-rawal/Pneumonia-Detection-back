@@ -119,18 +119,51 @@ const viewStats = async (req, res) => {
 patientRouter.get("/statsNumber", viewStats);
 
 const getHistory = async (req, res) => {
-  const { patient } = req.body;
-  const user = req.params.user;
+  const { user } = req.body;
+  // const user = req.params.user;
   try {
-    const history = historySchema.find({ user, patient });
+    const isUser = await userSchema.findOne({ name: user });
+    if (!isUser) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User not found" });
+    }
+
+    const history = await historySchema
+      .find({ user: isUser._id })
+      .populate("patient", "name");
     if (!history) {
       return res.status(400).json({ success: false, message: "no history " });
-    } else return res.status(200).json({ success: true, history });
+    } else return res.status(200).json({ success: true, history: history });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ success: false, message: err });
+  }
+};
+patientRouter.post("/getHistory", getHistory);
+
+const getPatient = async (req, res) => {
+  const { name } = req.body;
+  try {
+    const isUser = await userSchema.findOne({ name });
+    if (!isUser) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User not found" });
+    }
+    const isPatient = await patientSchema.find({ user: isUser._id });
+    if (!isPatient) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Patient getting error" });
+    }
+    return res.status(200).json({ success: true, isPatient });
   } catch (err) {
     return res
       .status(400)
-      .json({ success: false, message: "history getting unsuccessfull" });
+      .json({ success: false, message: "Error in getting Patient" });
   }
 };
-patientRouter.post("/getHistory/:user", getHistory);
+patientRouter.post("/myPatient", getPatient);
+
 export default patientRouter;
