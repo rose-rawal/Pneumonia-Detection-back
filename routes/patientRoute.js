@@ -20,11 +20,11 @@ const addPatient = async (req, res) => {
       gender,
       user: isUser._id,
     });
-    console.log(patientAdd);
+    console.log(isUser._id);
   } catch (err) {
     console.log(err);
   }
-  return res.json("hello");
+  return res.json("Your respnse");
 };
 patientRouter.post("/add", addPatient);
 
