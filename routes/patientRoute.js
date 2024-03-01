@@ -7,12 +7,18 @@ const patientRouter = Router();
 
 const addPatient = async (req, res) => {
   const { name, age, gender, user } = req.body;
+
   try {
+    const isUser = userSchema.findOne({ name: user });
+    if (!isUser) {
+      res.status(400).json({ success: false, msg: "User is not found" });
+    }
+
     const patientAdd = await patientSchema.create({
       name,
       age,
       gender,
-      user,
+      user: isUser._id,
     });
     console.log(patientAdd);
   } catch (err) {
@@ -167,15 +173,3 @@ const getPatient = async (req, res) => {
 patientRouter.post("/myPatient", getPatient);
 
 export default patientRouter;
-
-// self.goBackButton = QPushButton("GoBack", self)
-
-// layout = QVBoxLayout(self)
-// layout.addWidget(self.goBackButton)
-// self.setLayout(layout)
-
-// self.goBackButton.clicked.connect(self.goBack)
-// self.goBackButton.setFixedSize(50, 50)
-
-// def goBack(self):
-// widget.setCurrentIndex(widget.currentIndex()-1)
