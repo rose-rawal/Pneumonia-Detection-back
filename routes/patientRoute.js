@@ -167,3 +167,15 @@ const getPatient = async (req, res) => {
 patientRouter.post("/myPatient", getPatient);
 
 export default patientRouter;
+
+// self.goBackButton = QPushButton("GoBack", self)
+
+// layout = QVBoxLayout(self)
+// layout.addWidget(self.goBackButton)
+// self.setLayout(layout)
+
+// self.goBackButton.clicked.connect(self.goBack)
+// self.goBackButton.setFixedSize(50, 50)
+
+// def goBack(self):
+// widget.setCurrentIndex(widget.currentIndex()-1)

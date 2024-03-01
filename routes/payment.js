@@ -1,6 +1,7 @@
 import { Router } from "express";
 import request from "request";
 import userSchema from "../model/userSchema.js";
+
 // import axios from "axios";
 const paymentRouter = Router();
 
@@ -34,7 +35,7 @@ const doKhalti = async (req, res) => {
     findUser.remaining_predict += 10;
     findUser.save();
     console.log(response.body);
-    return res.json(response.body);
+    return res.json(JSON.parse(response.body));
   });
 };
 paymentRouter.post("/esewa", doKhalti);
