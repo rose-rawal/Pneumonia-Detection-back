@@ -89,6 +89,16 @@ const login = async (req, res) => {
 };
 router.post("/login", login);
 
+const getUser = async (req, res) => {
+  const { name } = req.body;
+  const isUser = await userSchema.findOne({ name });
+  if (!isUser) {
+    return res.status(400).json({ success: false, msg: "user not found" });
+  }
+  return res.status(200).json({ success: true, num: isUser.remaining_predict });
+};
+router.post("/getUser", getUser);
+
 router.use("/patient", patientRouter);
 router.use("/payment", paymentRouter);
 
