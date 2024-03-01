@@ -9,7 +9,7 @@ const addPatient = async (req, res) => {
   const { name, age, gender, user } = req.body;
 
   try {
-    const isUser = userSchema.findOne({ name: user });
+    const isUser = await userSchema.findOne({ name: user });
     if (!isUser) {
       res.status(400).json({ success: false, msg: "User is not found" });
     }
@@ -20,11 +20,11 @@ const addPatient = async (req, res) => {
       gender,
       user: isUser._id,
     });
-    console.log(patientAdd);
+    console.log(isUser._id);
   } catch (err) {
     console.log(err);
   }
-  return res.json("hello");
+  return res.json("Your respnse");
 };
 patientRouter.post("/add", addPatient);
 
